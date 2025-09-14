@@ -8,6 +8,7 @@ image_array = None
 current_feature_vector = None
 current_normalized_vector = None
 
+
 def load_img():
     global current_image, image_array
 
@@ -59,7 +60,7 @@ def calculate_features():
 
     rows = int(rows_entry.get())
     cols = int(cols_entry.get())
-    threshold = int(threshold_entry.get())
+    threshold = 128
 
     segments = segment_image(image_array, rows, cols)
     current_feature_vector = calculate_feature_vector(segments, threshold)
@@ -78,12 +79,12 @@ def display_results():
     normalized_str = "X_norm = (" + "; ".join(normalized_formatted) + ")\n\n"
     normalized_vector_text.insert(tk.END, normalized_str)
 
-# GUI
+#GUI
 root = tk.Tk()
 root.title("Вектор ознак графічних зображень")
 root.geometry("700x500")
 
-# --- Зображення ---
+#Зображення
 image_frame = ttk.LabelFrame(root, text="Зображення", padding="10")
 image_frame.grid(row=0, column=0, sticky="nsew", padx=10, pady=5)
 
@@ -94,11 +95,10 @@ image_canvas.pack(pady=10)
 load_button = ttk.Button(image_frame, text="Завантажити", command=load_img)
 load_button.pack(pady=5)
 
-# --- Налаштування ---
+#Налаштування сегментації
 settings_frame = ttk.LabelFrame(root, text="Налаштування", padding="10")
 settings_frame.grid(row=0, column=1, sticky="nsew", padx=10, pady=5)
 
-# Параметри сегментації
 ttk.Label(settings_frame, text="Рядки:").grid(row=0, column=0, sticky="w", pady=5)
 rows_entry = ttk.Entry(settings_frame, width=5)
 rows_entry.insert(0, "5")
@@ -109,13 +109,7 @@ cols_entry = ttk.Entry(settings_frame, width=5)
 cols_entry.insert(0, "5")
 cols_entry.grid(row=1, column=1, padx=5)
 
-ttk.Label(settings_frame, text="Поріг:").grid(row=2, column=0, sticky="w", pady=5)
-threshold_entry = ttk.Entry(settings_frame, width=5)
-threshold_entry.insert(0, "128")
-threshold_entry.grid(row=2, column=1, padx=5)
-
-ttk.Button(settings_frame, text="Обчислити", command=calculate_features)\
-    .grid(row=3, column=0, columnspan=2, pady=10)
+ttk.Button(settings_frame, text="Обчислити", command=calculate_features).grid(row=3, column=0, columnspan=2, pady=10)
 
 # --- Результати ---
 results_frame = ttk.Frame(root)
